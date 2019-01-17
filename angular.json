@@ -2,5 +2,42 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
-  "projects": {}
+  "projects": {
+    "cwdj-parallax": {
+      "root": "projects/cwdj-parallax",
+      "sourceRoot": "projects/cwdj-parallax/src",
+      "projectType": "library",
+      "prefix": "cwdj",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/cwdj-parallax/tsconfig.lib.json",
+            "project": "projects/cwdj-parallax/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/cwdj-parallax/src/test.ts",
+            "tsConfig": "projects/cwdj-parallax/tsconfig.spec.json",
+            "karmaConfig": "projects/cwdj-parallax/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/parallax/tsconfig.lib.json",
+              "projects/parallax/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "cwdj-parallax"
 }

@@ -17,6 +17,20 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "cwdj-parallax": [
+        "dist/cwdj-parallax"
+      ],
+      "cwdj-parallax/*": [
+        "dist/cwdj-parallax/*"
+      ],
+      "parallax": [
+        "dist/parallax"
+      ],
+      "parallax/*": [
+        "dist/parallax/*"
+      ]
+    }
   }
 }
