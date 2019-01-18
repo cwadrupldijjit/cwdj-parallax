@@ -5,10 +5,12 @@ import {
   ElementRef,
   OnDestroy,
   OnChanges,
-  SimpleChanges,
   Output,
   EventEmitter,
+  PLATFORM_ID,
+  Inject,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { IParallaxConfig } from './types';
 
 @Directive({
@@ -189,7 +191,7 @@ export class ParallaxDirective implements AfterViewInit, OnChanges, OnDestroy {
     'parallaxElement',
   ];
 
-  constructor(element: ElementRef) {
+  constructor(element: ElementRef, @Inject(PLATFORM_ID) private platformId) {
     this.hostElement = element.nativeElement;
   }
 
@@ -233,22 +235,28 @@ export class ParallaxDirective implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   public ngAfterViewInit() {
-    this.prepareConfig();
+    if (isPlatformBrowser(this.platformId)) {
+      this.prepareConfig();
 
-    this.scrollElement.addEventListener('scroll', this.evaluateScroll);
+      this.scrollElement.addEventListener('scroll', this.evaluateScroll);
 
-    this.prepareParallax();
+      this.prepareParallax();
+    }
   }
 
   public ngOnChanges() {
     if (!this.hasInitialized) return;
 
-    this.prepareConfig();
-    this.prepareParallax();
+    if (isPlatformBrowser(this.platformId)) {
+      this.prepareConfig();
+      this.prepareParallax();
+    }
   }
 
   public ngOnDestroy() {
-    this.scrollElement.removeEventListener('scroll', this.evaluateScroll);
+    if (isPlatformBrowser(this.platformId)) {
+      this.scrollElement.removeEventListener('scroll', this.evaluateScroll);
+    }
   }
 
   private prepareParallax() {
